@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import React, { useEffect, useState } from "react";
 import { faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -10,21 +11,17 @@ import {
   Container,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
+// import logo from "../../assets/img/kigra.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Routes } from "../../routes";
-import logo from "../../assets/img/kigra.jpg";
-import { login, navigateBasedOnAccess } from "../../redux/action/auth";
+import { Routes } from "../routes";
 import CustomInput from "./CustomInput";
 import { Spinner } from "reactstrap";
 import "./index.css";
-import { toast } from "react-hot-toast";
-import { toParagraph } from "../../utils";
-import Contact from "../../contact/Contact";
+// import { toast } from "react-hot-toast";
+// import Contact from "../../contact/Contact";
 import Cookies from "js-cookie";
 export default () => {
-  const history = useHistory();
-  const dispatch = useDispatch();
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -32,7 +29,7 @@ export default () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const error = useSelector((e) => e.auth.error);
+  // const error = useSelector((e) => e.auth.error);
 
   const handleChange = ({ target: { name, value } }) => {
     setForm((p) => ({ ...p, [name]: value }));
@@ -41,75 +38,8 @@ export default () => {
   const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
-
-    const timeoutId = setTimeout(() => {
-      setLoading(false);
-      // toast.error("Error Occured");
-    }, 10000);
-
-    if (form.password.length > 5) {
-      dispatch(
-        login({ ...form, history }, (data) => {
-          clearTimeout(timeoutId);
-          const role = data.user && data.user.role;
-          const mda_name = data.user && data.user.mda_name;
-          const user = data.user && data.user;
-          setLoading(false);
-          const expirationTime = new Date(
-            new Date().getTime() + 24 * 60 * 60 * 1000
-          );
-          Cookies.set("auth", JSON.stringify(form), {
-            expires: expirationTime,
-          });
-          if (role === "user" || role === "agent") {
-            if (
-              role === "agent" &&
-              mda_name === "Ministry of Land and Physical Planning"
-            ) {
-              history.push("/user/dashboard/land-payments");
-            } else {
-              history.push("/selection");
-            }
-            // setTimeout(() => window.location.reload(), 4000);
-            // window.location.reload()
-            // window.location.href =
-            //   process.env.NODE_ENV === "production"
-            //     ? `https://kirmas.kn.gov.ng/selection`
-            //     : "/selection";
-            // alert("LOGIN");
-            // console.log(data, "KKDKDKDDK");
-          } else {
-            // alert(JSON.stringify(user));
-            navigateBasedOnAccess(user.accessTo, history);
-            // if(user.department === null && user.role === "admin"){
-            //   history.push("/dashboard/overview");
-            // }else{
-            //    history.push("/receipt-report");
-            // }
-          }
-
-          if (error.msg) {
-            setLoading(false);
-          }
-        }),
-        (err) => {
-          clearTimeout(timeoutId);
-          if (error.msg) {
-            setLoading(false);
-          }
-          console.log(err);
-          setLoading(false);
-          toast.error("Unable to login");
-        }
-      );
-    }
-  };
-
-  useEffect(() => {
-    if (error) {
-      setLoading(false);
-    }
-  }, [error]);
+  }
+    
 
   return (
     <main className="background_image">
@@ -117,7 +47,7 @@ export default () => {
         <Container>
           <Row className="justify-content-center form-bg-image">
             <img
-              src={logo}
+              // src={logo}
               alt="logo"
               style={{ width: 100, marginBottom: -25, zIndex: 1 }}
             />
@@ -175,7 +105,7 @@ export default () => {
                       <Card.Link
                         className="small text-end"
                         as={Link}
-                        to={Routes.ForgotPassword.path}
+                        // to={Routes.ForgotPassword.path}
                       >
                         Forget password?
                       </Card.Link>
@@ -185,16 +115,13 @@ export default () => {
                     {loading ? <Spinner /> : "Sign in"}
                   </Button>
                 </form>
-                <p className="text-danger text-center">
-                  {typeof error === "string" && toParagraph(error)}
-                </p>
 
                 <div className="d-flex justify-content-center align-items-center mt-4">
                   <span className="fw-normal">
                     Not registered?
                     <Card.Link
                       as={Link}
-                      to={Routes.Signup.path}
+                      // to={Routes.Signup.path}
                       className="fw-bold"
                     >
                       {` Create account `}
@@ -204,7 +131,7 @@ export default () => {
               </div>
             </Col>
           </Row>
-          <Contact />
+          {/* <Contact /> */}
         </Container>
       </section>
     </main>
