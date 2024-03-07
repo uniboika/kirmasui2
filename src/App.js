@@ -1,15 +1,15 @@
 import React from "react";
-// import AppNavigation from "./Routes/AppNavigation";
-import Signin from "./pages/Signin";
-import HomePage from "./pages/HomePage";
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from "react-router-dom"; // Import BrowserRouter and Route
+
+import Signin from "./Pages/Signin";
+import HomePage from "./Pages/HomePage";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Signin />} />
-      <Route path="/home" element={<HomePage />} />
-    </Routes>
+    <Router>
+      <Route path="/" element={<Signin />} /> {/* Use Route */}
+      <Route path="/home" element={<HomePage />} /> {/* Use Route */}
+    </Router>
   );
 }
 
