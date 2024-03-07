@@ -1,27 +1,16 @@
-/* eslint-disable import/no-anonymous-default-export */
-// Import necessary dependencies
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import Signin from "./Pages/Signin";
-import HomePage from "./Pages/HomePage";
-import NotFound from "./Pages/NotFound";
-import Routes from "./routes";
+// import AppNavigation from "./Routes/AppNavigation";
+import Signin from "./pages/Signin";
+import HomePage from "./pages/HomePage";
+import { Routes, Route } from 'react-router-dom';
 
-// const Routes = {
-//   Signin: { path: '/signin' },
-//   HomePage: { path: '/home' },
-//   NotFound: { path: '/notfound' },
-// };
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Signin />} />
+      <Route path="/home" element={<HomePage />} />
+    </Routes>
+  );
+}
 
-const RouteWithLoad = ({ component: Component, ...rest }) => {
-  // You can include your loading logic here if needed
-  return <Route {...rest} render={(props) => <Component {...props} />} />;
-};
-
-export default () => (
-  <Switch>
-    <RouteWithLoad exact path={Routes.Signin.path} component={Signin} />
-    <RouteWithLoad exact path={Routes.HomePage.path} component={HomePage} />
-    <Redirect to={Routes.NotFound.path} component={NotFound} />
-  </Switch>
-);
+export default App;
